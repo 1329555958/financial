@@ -2,16 +2,19 @@ package com.imooc.manager.controller;
 
 import com.imooc.entity.Product;
 import com.imooc.entity.enums.ProductStatus;
+import com.imooc.manager.repositories.ProductRepository;
 import com.imooc.util.RestUtil;
 import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import org.springframework.web.client.ResponseErrorHandler;
 import org.springframework.web.client.RestTemplate;
@@ -38,6 +41,9 @@ public class ProductControllerTest {
 
     //异常数据
     private static List<Product> exceptions = new ArrayList<>();
+
+    @Autowired
+    private ProductRepository productRepository;
 
     @BeforeClass
     public static void init() {
@@ -78,6 +84,7 @@ public class ProductControllerTest {
 
 
     @Test
+    @Transactional
     public void create() {
         normals.forEach(product -> {
             Product result = RestUtil.postJSON(rest, baseUrl + "/products", product, Product.class);
@@ -106,5 +113,21 @@ public class ProductControllerTest {
             Assert.isNull(result,"查询失败");
         });
     }
+
+    @Test
+    @Transactional
+    public void transaction(){
+        normals.forEach(product -> {
+            product.setLockTerm(0);
+            productRepository.saveAndFlush(product);
+        });
+    }
+
+    @Test
+    public void zzzzClean(){
+        productRepository.delete(normals);
+    }
+
+
 
 }
