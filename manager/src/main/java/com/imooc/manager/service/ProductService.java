@@ -154,4 +154,10 @@ public class ProductService {
         return page;
     }
 
+    public static void main(String[] args){
+        System.out.println("create".hashCode());
+        System.out.println("findOne22".hashCode());
+        System.out.println("createException".hashCode());
+    }
+
 }
