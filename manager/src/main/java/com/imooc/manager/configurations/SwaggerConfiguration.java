@@ -1,11 +1,12 @@
 package com.imooc.manager.configurations;
 
-import com.google.common.base.Predicate;
 import com.imooc.manager.controller.ProductController;
+import org.springframework.boot.autoconfigure.web.BasicErrorController;
+import org.springframework.boot.autoconfigure.web.ErrorController;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import springfox.documentation.RequestHandler;
 import springfox.documentation.builders.ApiInfoBuilder;
+import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.spi.DocumentationType;
@@ -24,7 +25,8 @@ public class SwaggerConfiguration {
         return new Docket(DocumentationType.SWAGGER_2)
                 .groupName("controller")
                 .apiInfo(apiInfo())
-                .select()
+                .select().apis(RequestHandlerSelectors.basePackage(ProductController.class.getPackage().getName()))
+//                .paths(PathSelectors.ant("/products/*"))
                 .build();
     }
 
