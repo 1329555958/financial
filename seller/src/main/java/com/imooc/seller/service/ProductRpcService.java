@@ -12,8 +12,12 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import sun.net.util.URLUtil;
 
 import javax.annotation.PostConstruct;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,8 +47,22 @@ public class ProductRpcService {
         LOG.info("rpc查询全部产品,结果:{}", result);
         return result;
     }
-    @PostConstruct
-    public void testFindAll(){
-        findAll();
+
+    /**
+     * 查询单个产品
+     * @param id
+     * @return
+     */
+    public Product findOne(String id){
+        LOG.info("rpc查询单个产品,请求:{}", id);
+        Product result = productRpc.findOne(id);
+        LOG.info("rpc查询单个产品,结果:{}", result);
+        return result;
     }
+
+    @PostConstruct
+    public void init(){
+        findOne("001");
+    }
+
 }
