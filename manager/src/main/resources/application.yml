@@ -13,3 +13,7 @@ server:
 swagger:
   groupName: manger
   basePackage: com.imooc.manager.controller
+
+logging:
+   level:
+      com.googlecode.jsonrpc4j: debug
