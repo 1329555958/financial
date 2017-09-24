@@ -1,6 +1,7 @@
 package com.imooc.api;
 
 import com.googlecode.jsonrpc4j.JsonRpcService;
+import com.imooc.api.domain.ParamInf;
 import com.imooc.api.domain.ProductRpcReq;
 import com.imooc.entity.Product;
 import org.springframework.data.domain.Page;
@@ -10,7 +11,7 @@ import java.util.List;
 /**
  * 产品相关的rpc服务
  */
-@JsonRpcService("rpc/products")
+@JsonRpcService
 public interface ProductRpc {
     /**
      * 查询多个产品
@@ -18,7 +19,7 @@ public interface ProductRpc {
      * @param req
      * @return
      */
-    List<Product> query(ProductRpcReq req);
+    List<Product> query(ParamInf req);
 
     /**
      * 查询单个产品

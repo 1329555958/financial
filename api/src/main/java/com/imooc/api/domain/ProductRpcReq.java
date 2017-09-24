@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * 产品相关rpc请求对象
  */
-public class ProductRpcReq {
+public class ProductRpcReq implements ParamInf {
     private List<String> idList;
     private BigDecimal minRewardRate;
 
