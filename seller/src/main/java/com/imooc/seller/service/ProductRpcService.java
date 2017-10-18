@@ -60,7 +60,7 @@ public class ProductRpcService {
         return result;
     }
 
-    @PostConstruct
+//    @PostConstruct
     public void init(){
         findAll();
     }
