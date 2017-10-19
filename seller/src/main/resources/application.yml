@@ -10,3 +10,6 @@ rpc:
   client:
     url:  http://localhost:8081/manager
     basePackage: com.imooc.api
+spring:
+  cache:
+    type: hazelcast
