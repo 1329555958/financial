@@ -23,6 +23,9 @@ ext {
                      'com.hazelcast:hazelcast:3.8.6',
                      'com.hazelcast:hazelcast-spring:3.8.6',
             ],
+            activemq:[
+                    "org.springframework.boot:spring-boot-starter-activemq:${versions.springBootVersion}",
+            ],
             test   : [
                     "org.springframework.boot:spring-boot-starter-test:${versions.springBootVersion}"
 
