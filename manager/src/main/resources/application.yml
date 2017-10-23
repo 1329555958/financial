@@ -13,7 +13,7 @@ spring:
     pub-sub-domain: true
 server:
   context-path: /manager
-  port: 8084
+  port: 8081
 swagger:
   groupName: manger
   basePackage: com.imooc.manager.controller

@@ -1,5 +1,6 @@
 package com.imooc.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
@@ -39,8 +40,10 @@ public class Order {
 
     private String memo;
 
+    @JsonFormat(pattern = "YYYY-MM-DD HH:mm:ss")
     private Date createAt;
 
+    @JsonFormat(pattern = "YYYY-MM-DD HH:mm:ss")
     private Date updateAt;
 
     @Override
