@@ -71,10 +71,10 @@ public class ProductRpcService implements ApplicationListener<ContextRefreshedEv
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
-        List<Product> products = findAll();
-        products.forEach(product -> {
-            productCache.putCache(product);
-        });
+//        List<Product> products = findAll();
+//        products.forEach(product -> {
+//            productCache.putCache(product);
+//        });
     }
 
     @JmsListener(destination = MQ_DESTINATION)
