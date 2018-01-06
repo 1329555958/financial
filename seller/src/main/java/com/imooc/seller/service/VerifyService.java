@@ -53,6 +53,19 @@ public class VerifyService {
             e.printStackTrace();
         }
         //构造起止时间
+        Date start = getStartOfDay(day);
+        Date end = add24Hours(start);
+        List<String> orders = verifyRepository.queryVerificationOrders(chanId,start,end);
+        String content = String.join(END_LINE,orders);
+        FileUtil.writeAsString(path,content);
+        return  path;
+    }
+
+    private Date add24Hours(Date start) {
+        return new Date(start.getTime() + 1000 * 60 *60 *24);
+    }
+
+    private Date getStartOfDay(Date day) {
         String start_str = DAY_FORMAT.format(day);
         Date start = null;
         try {
@@ -60,12 +73,9 @@ public class VerifyService {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        Date end = new Date(start.getTime() + 1000 * 60 *60 *24);
-        List<String> orders = verifyRepository.queryVerificationOrders(chanId,start,end);
-        String content = String.join(END_LINE,orders);
-        FileUtil.writeAsString(path,content);
-        return  path;
+        return start;
     }
+
     //获取对账文件路径
     public File getPath(String rootDir,String chanId, Date day){
         String name = DAY_FORMAT.format(day) + "-" + chanId + ".txt";
@@ -122,5 +132,20 @@ public class VerifyService {
             orders.add(parseLine(line));
         }
         verifyRepository.save(orders);
+    }
+
+    public List<String> verifyOrder(String chanId,Date day){
+        List<String> errors = new ArrayList<>();
+        Date start = getStartOfDay(day);
+        Date end = add24Hours(start);
+        List<String> excessOrders = verifyRepository.queryExcessOrders(chanId,start,end);
+        List<String> missOrders = verifyRepository.queryMissOrders(chanId,start,end);
+        List<String> differentOrders = verifyRepository.queryDifferentOrders(chanId,start,end);
+
+        errors.add("长款订单号:"+String.join(",",excessOrders));
+        errors.add("漏单订单号:"+String.join(",",missOrders));
+        errors.add("不一致订单号:"+String.join(",",differentOrders));
+
+        return errors;
     }
 }

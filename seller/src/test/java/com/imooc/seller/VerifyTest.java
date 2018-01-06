@@ -33,4 +33,9 @@ public class VerifyTest {
         Date day = new GregorianCalendar(2017,0,1).getTime();
         verifyService.saveChanOrders("111",day);
     }
+    @Test
+    public void verifyTest(){
+        Date day = new GregorianCalendar(2017,0,1).getTime();
+        System.out.println(String.join(";", verifyService.verifyOrder("111", day)));
+    }
 }
