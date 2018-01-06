@@ -28,4 +28,9 @@ public class VerifyTest {
         File file = verifyService.makeVerificationFile("111",day);
         System.out.println(file.getAbsolutePath());
     }
+    @Test
+    public void saveVerificationOrders(){
+        Date day = new GregorianCalendar(2017,0,1).getTime();
+        verifyService.saveChanOrders("111",day);
+    }
 }

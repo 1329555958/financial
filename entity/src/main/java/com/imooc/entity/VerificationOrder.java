@@ -32,7 +32,6 @@ public class VerificationOrder {
 
     private String outerOrderId;
 
-    private String memo;
 
     @JsonFormat(pattern = "YYYY-MM-DD HH:mm:ss")
     private Date createAt;
@@ -98,14 +97,6 @@ public class VerificationOrder {
         this.outerOrderId = outerOrderId;
     }
 
-
-    public String getMemo() {
-        return memo;
-    }
-
-    public void setMemo(String memo) {
-        this.memo = memo;
-    }
 
     public Date getCreateAt() {
         return createAt;
