@@ -9,6 +9,7 @@ import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.AdviceMode;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
  * 销售端启动类
@@ -16,6 +17,7 @@ import org.springframework.context.annotation.AdviceMode;
 @SpringBootApplication
 @EnableCaching
 @EntityScan("com.imooc.entity")
+@EnableScheduling
 public class SellerApp {
     public static void main(String[] args) {
         SpringApplication.run(SellerApp.class);
