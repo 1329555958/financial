@@ -7,6 +7,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -26,6 +27,14 @@ public class VerifyTest {
 
     @Autowired
     private OrderRepository orderRepository;
+
+    @Autowired
+    @Qualifier("readorderRepository")
+    private OrderRepository readOrderRepository;
+
+    @Autowired
+    @Qualifier("backupOrderRepository")
+    private OrderRepository backOrderRepository;
     @Test
     public void makeVerificationTest(){
         Date day = new GregorianCalendar(2017,0,1).getTime();
@@ -45,5 +54,6 @@ public class VerifyTest {
     @Test
     public void queryOrder(){
         System.out.println(orderRepository.findAll());
+        System.out.println(readOrderRepository.findAll());
     }
 }
