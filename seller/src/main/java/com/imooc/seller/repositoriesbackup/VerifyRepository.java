@@ -1,4 +1,4 @@
-package com.imooc.seller.repositories;
+package com.imooc.seller.repositoriesbackup;
 
 import com.imooc.entity.VerificationOrder;
 import org.springframework.data.jpa.repository.JpaRepository;

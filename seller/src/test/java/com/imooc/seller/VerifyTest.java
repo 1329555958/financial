@@ -1,5 +1,6 @@
 package com.imooc.seller;
 
+import com.imooc.seller.repositories.OrderRepository;
 import com.imooc.seller.service.VerifyService;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -22,6 +23,9 @@ import java.util.GregorianCalendar;
 public class VerifyTest {
     @Autowired
     private VerifyService verifyService;
+
+    @Autowired
+    private OrderRepository orderRepository;
     @Test
     public void makeVerificationTest(){
         Date day = new GregorianCalendar(2017,0,1).getTime();
@@ -37,5 +41,9 @@ public class VerifyTest {
     public void verifyTest(){
         Date day = new GregorianCalendar(2017,0,1).getTime();
         System.out.println(String.join(";", verifyService.verifyOrder("111", day)));
+    }
+    @Test
+    public void queryOrder(){
+        System.out.println(orderRepository.findAll());
     }
 }

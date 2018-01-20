@@ -16,7 +16,7 @@ public class VerifyTask {
     @Autowired
     private VerifyService verifyService;
 
-    @Scheduled(cron = "0/5 * * * * ? ")
+//    @Scheduled(cron = "0/5 * * * * ? ")
     public void hello(){
         System.out.println("hello");
     }

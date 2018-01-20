@@ -77,7 +77,7 @@ public class ProductRpcService implements ApplicationListener<ContextRefreshedEv
 //        });
     }
 
-    @JmsListener(destination = MQ_DESTINATION)
+//    @JmsListener(destination = MQ_DESTINATION)
     void updateCache(ProductStatusEvent event) {
         LOG.info("receive event:{}", event);
         productCache.removeCache(event.getId());

@@ -2,7 +2,7 @@ package com.imooc.seller.service;
 
 import com.imooc.entity.VerificationOrder;
 import com.imooc.seller.enums.ChanEnum;
-import com.imooc.seller.repositories.VerifyRepository;
+import com.imooc.seller.repositoriesbackup.VerifyRepository;
 import org.aspectj.util.FileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,10 +15,8 @@ import java.nio.file.Paths;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 /**
