@@ -14,7 +14,7 @@ import java.util.Map;
 /**
  * 统一错误处理
  */
-@ControllerAdvice(basePackages = {"com.imooc.manager.controller"})
+//@ControllerAdvice(basePackages = {"com.imooc.manager.controller"})
 public class ErrorControllerAdvice {
 
     @ExceptionHandler(Exception.class)

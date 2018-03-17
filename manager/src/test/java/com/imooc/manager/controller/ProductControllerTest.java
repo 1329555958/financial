@@ -125,7 +125,7 @@ public class ProductControllerTest {
 
     @Test
     public void zzzzClean(){
-        productRepository.delete(normals);
+        productRepository.deleteAll(normals);
     }
 
 

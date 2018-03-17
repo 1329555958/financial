@@ -100,7 +100,7 @@ public class ProductService {
         Assert.notNull(id, "需要产品编号参数");
         LOG.debug("查询单个产品，id={}", id);
 
-        Product product = repository.findOne(id);
+        Product product = repository.findById(id).orElse(null);
 
         LOG.debug("查询单个产品,结果={}", product);
 
