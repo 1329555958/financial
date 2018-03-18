@@ -3,4 +3,5 @@ dependencies{
     compile libs.hazelcast
     compile libs.activemq
     compile libs.mysql
+    compile libs.findbugs
 }

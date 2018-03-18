@@ -1,5 +1,5 @@
 /*
- * Copyright 2014-2016 the original author or authors.
+ * Copyright 2014-2017 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,13 +19,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Nullable;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.parsing.BeanComponentDefinition;
 import org.springframework.beans.factory.support.AbstractBeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
-import org.springframework.beans.factory.support.BeanNameGenerator;
 import org.springframework.context.annotation.Primary;
 import org.springframework.core.env.Environment;
 import org.springframework.core.env.EnvironmentCapable;
@@ -43,6 +44,7 @@ import org.springframework.util.Assert;
  * s.
  *
  * @author Oliver Gierke
+ * @author Jens Schauder
  */
 public class RepositoryConfigurationDelegate {
 
@@ -56,7 +58,6 @@ public class RepositoryConfigurationDelegate {
     private final RepositoryConfigurationSource configurationSource;
     private final ResourceLoader resourceLoader;
     private final Environment environment;
-    private final BeanNameGenerator beanNameGenerator;
     private final boolean isXml;
     private final boolean inMultiStoreMode;
 
@@ -78,10 +79,6 @@ public class RepositoryConfigurationDelegate {
                 "Configuration source must either be an Xml- or an AnnotationBasedConfigurationSource!");
         Assert.notNull(resourceLoader, "ResourceLoader must not be null!");
 
-        RepositoryBeanNameGenerator generator = new RepositoryBeanNameGenerator();
-        generator.setBeanClassLoader(resourceLoader.getClassLoader());
-
-        this.beanNameGenerator = generator;
         this.configurationSource = configurationSource;
         this.resourceLoader = resourceLoader;
         this.environment = defaultEnvironment(environment, resourceLoader);
@@ -96,7 +93,8 @@ public class RepositoryConfigurationDelegate {
      * @param resourceLoader can be {@literal null}.
      * @return
      */
-    private static Environment defaultEnvironment(Environment environment, ResourceLoader resourceLoader) {
+    private static Environment defaultEnvironment(@Nullable Environment environment,
+                                                  @Nullable ResourceLoader resourceLoader) {
 
         if (environment != null) {
             return environment;
@@ -120,7 +118,7 @@ public class RepositoryConfigurationDelegate {
 
         RepositoryBeanDefinitionBuilder builder = new RepositoryBeanDefinitionBuilder(registry, extension, resourceLoader,
                 environment);
-        List<BeanComponentDefinition> definitions = new ArrayList<BeanComponentDefinition>();
+        List<BeanComponentDefinition> definitions = new ArrayList<>();
 
         for (RepositoryConfiguration<? extends RepositoryConfigurationSource> configuration : extension
                 .getRepositoryConfigurations(configurationSource, resourceLoader, inMultiStoreMode)) {
@@ -136,7 +134,7 @@ public class RepositoryConfigurationDelegate {
             }
 
             AbstractBeanDefinition beanDefinition = definitionBuilder.getBeanDefinition();
-            String beanName = beanNameGenerator.generateBeanName(beanDefinition, registry);
+            String beanName = configurationSource.generateBeanName(beanDefinition);
 
             AnnotationMetadata metadata = (AnnotationMetadata) configurationSource.getSource();
 
@@ -149,11 +147,9 @@ public class RepositoryConfigurationDelegate {
                 String prefix = (String) prefixData.get("value");
                 beanName = prefix + beanName;
             }
-
-
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug(REPOSITORY_REGISTRATION, extension.getModuleName(), beanName,
-                        configuration.getRepositoryInterface(), extension.getRepositoryFactoryClassName());
+                        configuration.getRepositoryInterface(), configuration.getRepositoryFactoryBeanClassName());
             }
 
             beanDefinition.setAttribute(FACTORY_BEAN_OBJECT_TYPE, configuration.getRepositoryInterface());
